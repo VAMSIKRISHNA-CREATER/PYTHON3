@@ -1,0 +1,134 @@
+Establishing a Connection With MySQL Server
+===========================================
+	MySQL is a server-based database management system.
+      One server might contain multiple databases. 
+      To interact with a database, you must first establish a connection with the server. 
+      The general workflow of a Python program that interacts with a MySQL-based database is as follows:
+
+		Connect to the MySQL server.
+		Create a new database.
+		Connect to the newly created or an existing database.
+		Execute a SQL query and fetch results.
+		Inform the database if any changes are made to a table.
+		Close the connection to the MySQL server.
+
+
+
+====================================================================================================================
+
+		*   The first step in interacting with a MySQL server is to ESTABLISH CONNECTION . 
+
+            *   To do this, you need connect() from the mysql.connector module. This function 	
+                takes in parameters like host, user, and password and returns a MySQLConnection object.
+
+            *   You can receive these credentials as input from the user and pass them to connect():
+
+
+				from getpass import getpass
+				from mysql.connector import connect, Error
+
+				try:
+   					with connect(
+        				host="localhost",
+        				user=input("Enter username: "),
+        				password=getpass("Enter password: "),
+    					) as connection:
+       				print(connection)
+				except Error as e:
+    					print(e)
+
+
+           *   MySQL Connector/Python provides MySQLCursor class,
+      	   which instantiates objects that can execute MySQL queries in Python.
+
+   	     *   An instance of the MySQLCursor class is also called a cursor.
+
+           *   cursor objects make use of a MySQLConnection object to interact
+         	   with your MySQL server. To create a cursor, use the .cursor()
+         	   method of your connection variable.
+
+                   cursor = connection.cursor()
+
+           *   A query that needs to be executed is sent to cursor.execute() in string format.
+
+=========================================================================================================================
+	
+	     *   ursor.execute(operation, params=None, multi=False)
+
+			iterator = cursor.execute(operation, params=None, multi=True)
+			This method executes the given database operation (query or command). 
+			The parameters found in the tuple or dictionary params are bound to the 				
+			variables in the operation. Specify variables using %s or %(name)s parameter style
+			(that is, using format or pyformat style). execute() returns an iterator if multi is True.
+
+			Note : -
+					In Python, a tuple containing a single value must include a comma.
+					For example, ('abc') is evaluated as a scalar while ('abc',) is evaluated as a tuple.
+
+
+
+              ----------------------------------------------------------------
+  
+          *   cursor.executemany(operation, seq_of_params)
+
+
+                 This method prepares a database operation (query or command) and executes it
+		     against all parameter sequences or mappings found in the sequence seq_of_params.
+
+
+			Note : - 
+					In Python, a tuple containing a single value must include a comma.
+					For example, ('abc') is evaluated as a scalar while ('abc',) is evaluated as a tuple.
+
+ 			In most cases, the executemany() method iterates through the sequence of parameters, 
+			each time passing the current parameters to the execute() method.
+
+
+			An optimization is applied for inserts: The data values given by the parameter sequences are batched 
+			using multiple-row syntax. The following example inserts three records:
+
+					data = [
+					       ('Jane', date(2005, 2, 12)),
+  						 ('Joe', date(2006, 5, 23)),
+  						 ('John', date(2010, 10, 3)),
+						]
+			stmt = "INSERT INTO employees (first_name, hire_date) VALUES (%s, %s)"
+			cursor.executemany(stmt, data)
+			For the preceding example, the INSERT statement sent to MySQL is:
+
+ 			INSERT INTO employees (first_name, hire_date)
+			VALUES ('Jane', '2005-02-12'), ('Joe', '2006-05-23'), ('John', '2010-10-03')
+			With the executemany() method, it is not possible to specify multiple statements to execute in the operation argument. 
+			Doing so raises an InternalError exception. Consider using execute() with multi=True instead.
+
+
+
+=======================================================================================================================================================
+ 
+
+         *    close connection
+
+					Here closing connection is not mandatory but we shoud close the connection
+                              for good practice
+
+
+               connectionObject.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

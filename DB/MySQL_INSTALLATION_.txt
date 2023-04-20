@@ -1,0 +1,33 @@
+
+
+MySQL( It is server ) is one of the most popular database management systems (DBMSs) on the market today.
+It ranked second only to the Oracle DBMS in this year’s DB-Engines Ranking.
+As most software applications need to interact with data in some form,
+programming languages like Python provide tools for storing and accessing these data sources.
+
+
+Installing MySQL Server : --
+============================
+
+https://dev.mysql.com/downloads/file/?id=517975
+
+
+or  
+
+mysql-installer-community-8.0.32.0.msi
+
+
+
+
+Set user = root 
+and 
+Set password = root
+
+
+
+
+
+
+
+
+

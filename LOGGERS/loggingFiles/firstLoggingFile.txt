@@ -1,0 +1,4 @@
+DEBUG:root:Logging message
+DEBUG:root:Logging message
+DEBUG:root:Logging message
+3920-DEBUG-Logging message
